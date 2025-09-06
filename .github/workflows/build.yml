@@ -30,7 +30,6 @@ jobs:
           mkdir -p app/src/main/res/values
           mkdir -p app/src/main/res/raw
 
-          # Add a placeholder audio file
           echo "This is a placeholder audio file." > app/src/main/res/raw/sample_song.mp3
 
           # --- MainActivity.kt ---
@@ -283,9 +282,9 @@ jobs:
           }
           EOF
 
-      # 4️⃣ Set up Gradle wrapper (AFTER files exist)
+      # 4️⃣ Set up Gradle wrapper with 8.7 (required)
       - name: Set up Gradle wrapper
-        run: gradle wrapper --gradle-version 8.5
+        run: gradle wrapper --gradle-version 8.7
 
       # 5️⃣ Build APK
       - name: Build APK
