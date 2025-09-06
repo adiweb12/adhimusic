@@ -20,14 +20,15 @@ jobs:
 
       - name: Prepare Android Project
         run: |
+          # Create project folders
           mkdir -p MyMusicPlayer/app/src/main/java/com/example/musicplayer
           mkdir -p MyMusicPlayer/app/src/main/res/layout
           mkdir -p MyMusicPlayer/app/src/main/res/values
 
-          # Move Kotlin files from root
+          # Copy Kotlin files from root
           cp *.kt MyMusicPlayer/app/src/main/java/com/example/musicplayer/
 
-          # AndroidManifest.xml with permissions + service
+          # AndroidManifest.xml
           cat <<EOF > MyMusicPlayer/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android"
               package="com.example.musicplayer">
@@ -49,7 +50,7 @@ jobs:
           </manifest>
           EOF
 
-          # activity_main.xml (RecyclerView + mini-player placeholder)
+          # Layouts
           cat <<EOF > MyMusicPlayer/app/src/main/res/layout/activity_main.xml
           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
@@ -72,7 +73,6 @@ jobs:
           </LinearLayout>
           EOF
 
-          # item_music.xml
           cat <<EOF > MyMusicPlayer/app/src/main/res/layout/item_music.xml
           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
@@ -99,14 +99,13 @@ jobs:
           </LinearLayout>
           EOF
 
-          # strings.xml
+          # Values
           cat <<EOF > MyMusicPlayer/app/src/main/res/values/strings.xml
           <resources>
               <string name="app_name">MusicPlayer</string>
           </resources>
           EOF
 
-          # colors.xml
           cat <<EOF > MyMusicPlayer/app/src/main/res/values/colors.xml
           <resources>
               <color name="black">#000000</color>
@@ -114,7 +113,6 @@ jobs:
           </resources>
           EOF
 
-          # themes.xml
           cat <<EOF > MyMusicPlayer/app/src/main/res/values/themes.xml
           <resources xmlns:tools="http://schemas.android.com/tools">
               <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
@@ -124,27 +122,29 @@ jobs:
           </resources>
           EOF
 
-          # settings.gradle
+          # Settings
           cat <<EOF > MyMusicPlayer/settings.gradle
           rootProject.name = "MyMusicPlayer"
           include ':app'
           EOF
 
-          # Project build.gradle
+          # Root build.gradle
           cat <<EOF > MyMusicPlayer/build.gradle
           buildscript {
               repositories { google(); mavenCentral() }
-              dependencies { classpath "com.android.tools.build:gradle:8.5.0" }
+              dependencies {
+                  classpath "com.android.tools.build:gradle:8.5.0"
+                  classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
+              }
           }
+
           allprojects { repositories { google(); mavenCentral() } }
           EOF
 
-          # App build.gradle
+          # App build.gradle (fixed Kotlin plugin)
           cat <<EOF > MyMusicPlayer/app/build.gradle
-          plugins {
-              id 'com.android.application'
-              id 'org.jetbrains.kotlin.android'
-          }
+          apply plugin: 'com.android.application'
+          apply plugin: 'kotlin-android'
 
           android {
               namespace "com.example.musicplayer"
@@ -166,7 +166,13 @@ jobs:
               }
           }
 
+          repositories {
+              google()
+              mavenCentral()
+          }
+
           dependencies {
+              implementation "org.jetbrains.kotlin:kotlin-stdlib:2.2.0"
               implementation "androidx.core:core-ktx:1.13.1"
               implementation "androidx.appcompat:appcompat:1.7.0"
               implementation "com.google.android.material:material:1.12.0"
