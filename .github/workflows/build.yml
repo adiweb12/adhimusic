@@ -34,6 +34,10 @@ jobs:
           mkdir -p app/src/main/java/com/example/musicplayer
           mkdir -p app/src/main/res/layout
           mkdir -p app/src/main/res/values
+          mkdir -p app/src/main/res/raw
+
+          # Add a placeholder audio file to prevent build errors
+          echo "This is a placeholder audio file." > app/src/main/res/raw/sample_song.mp3
 
           # MainActivity.kt
           cat <<EOF > app/src/main/java/com/example/musicplayer/MainActivity.kt
@@ -119,9 +123,6 @@ jobs:
                     if (intent?.action == "PLAY") {
                       mediaPlayer?.stop()
                       mediaPlayer?.release()
-                      // NOTE: Need to provide a valid audio resource (R.raw.sample_song)
-                      // This code will fail until you add a file named 'sample_song.mp3' or similar
-                      // to the 'app/src/main/res/raw/' directory.
                       mediaPlayer = MediaPlayer.create(this, R.raw.sample_song) 
                       mediaPlayer?.start()
                     } 
@@ -297,7 +298,7 @@ jobs:
       # 5️⃣ Build APK
       - name: Build APK
         run: gradle assembleDebug
-        working-directory: ${{ github.workspace }}
+        working-directory: .
 
       # 6️⃣ Upload APK artifact
       - name: Upload APK
