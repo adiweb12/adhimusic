@@ -22,13 +22,7 @@ jobs:
           distribution: temurin
           java-version: 17
 
-      # 3️⃣ Set up Gradle wrapper
-      - name: Set up Gradle wrapper
-        run: |
-          gradle wrapper --gradle-version 8.5
-        working-directory: .
-
-      # 4️⃣ Generate Android project structure
+      # 3️⃣ Generate Android project structure
       - name: Generate Android project
         run: |
           mkdir -p app/src/main/java/com/example/musicplayer
@@ -121,7 +115,6 @@ jobs:
               private var mediaPlayer: MediaPlayer? = null
 
               override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
-                  val song = intent?.getStringExtra("SONG_NAME") ?: "Unknown"
                   if (intent?.action == "PLAY") {
                       mediaPlayer?.stop()
                       mediaPlayer?.release()
@@ -289,6 +282,10 @@ jobs:
               implementation "androidx.activity:activity-ktx:1.9.2"
           }
           EOF
+
+      # 4️⃣ Set up Gradle wrapper (AFTER files exist)
+      - name: Set up Gradle wrapper
+        run: gradle wrapper --gradle-version 8.5
 
       # 5️⃣ Build APK
       - name: Build APK
