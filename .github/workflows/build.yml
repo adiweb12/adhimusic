@@ -188,74 +188,74 @@ jobs:
               <TextView
                   android:id="@+id/textArtist"
               android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Artist"
-        android:textSize="14sp"
-        android:textColor="#AAAAAA"/>
-</LinearLayout>
-EOF
+              android:layout_height="wrap_content"
+                android:text="Artist"
+                android:textSize="14sp"
+            android:textColor="#AAAAAA"/>
+          </LinearLayout>
+          EOF
 
           # ---------- Values ----------
           cat <<EOF > app/src/main/res/values/strings.xml
-<resources>
-    <string name="app_name">MusicPlayer</string>
-</resources>
-EOF
+          <resources>
+                <string name="app_name">MusicPlayer</string>
+          </resources>
+            EOF
 
           cat <<EOF > app/src/main/res/values/colors.xml
-<resources>
-    <color name="black">#000000</color>
-    <color name="white">#FFFFFF</color>
-</resources>
-EOF
+        <resources>
+              <color name="black">#000000</color>
+                <color name="white">#FFFFFF</color>
+        </resources>
+          EOF
 
           cat <<EOF > app/src/main/res/values/themes.xml
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorOnPrimary">@color/white</item>
-    </style>
-</resources>
-EOF
+                <resources xmlns:tools="http://schemas.android.com/tools">
+                  <style name="Theme.MusicPlayer" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
+                    <item name="colorPrimary">@color/black</item>
+                      <item name="colorOnPrimary">@color/white</item>
+                    </style>
+            </resources>
+            EOF
 
           # ---------- Gradle files ----------
           cat <<EOF > settings.gradle
-rootProject.name = "MyMusicPlayer"
-include ':app'
-EOF
+                      rootProject.name = "MyMusicPlayer"
+                        include ':app'
+                EOF
 
           cat <<EOF > build.gradle
-buildscript {
-    repositories { google(); mavenCentral() }
-    dependencies {
-        classpath "com.android.tools.build:gradle:8.5.0"
-        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
-    }
-}
-allprojects { repositories { google(); mavenCentral() } }
-EOF
+                  buildscript {
+                        repositories { google(); mavenCentral() }
+                        dependencies {
+                          classpath "com.android.tools.build:gradle:8.5.0"
+                            classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.0"
+                  }
+                  }
+                allprojects { repositories { google(); mavenCentral() } }
+            EOF
 
           cat <<EOF > app/build.gradle
-apply plugin: 'com.android.application'
-apply plugin: 'kotlin-android'
+            apply plugin: 'com.android.application'
+            apply plugin: 'kotlin-android'
 
-android {
-    namespace "com.example.musicplayer"
-    compileSdk 34
+                android {
+                  namespace "com.example.musicplayer"
+                    compileSdk 34
 
-    defaultConfig {
-        applicationId "com.example.musicplayer"
-        minSdk 24
-        targetSdk 34
-        versionCode 1
-        versionName "1.0"
-    }
+                  defaultConfig {
+                        applicationId "com.example.musicplayer"
+                      minSdk 24
+                targetSdk 34
+                      versionCode 1
+                        versionName "1.0"
+                    }
 
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+                            buildTypes {
+                              release {
+                                  minifyEnabled false
+                                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+                  }
     }
 }
 
