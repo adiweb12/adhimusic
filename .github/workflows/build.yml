@@ -15,7 +15,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      # 2️⃣ Set up JDK
+      # 2️⃣ Set up JDK 17
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
@@ -30,9 +30,10 @@ jobs:
           mkdir -p app/src/main/res/values
           mkdir -p app/src/main/res/raw
 
+          # Placeholder audio
           echo "This is a placeholder audio file." > app/src/main/res/raw/sample_song.mp3
 
-          # --- MainActivity.kt ---
+          # MainActivity.kt
           cat <<'EOF' > app/src/main/java/com/example/musicplayer/MainActivity.kt
           package com.example.musicplayer
 
@@ -64,7 +65,7 @@ jobs:
           }
           EOF
 
-          # --- MusicAdapter.kt ---
+          # MusicAdapter.kt
           cat <<'EOF' > app/src/main/java/com/example/musicplayer/MusicAdapter.kt
           package com.example.musicplayer
 
@@ -101,7 +102,7 @@ jobs:
           }
           EOF
 
-          # --- PlayerService.kt ---
+          # PlayerService.kt
           cat <<'EOF' > app/src/main/java/com/example/musicplayer/PlayerService.kt
           package com.example.musicplayer
 
@@ -133,7 +134,7 @@ jobs:
           }
           EOF
 
-          # --- AndroidManifest.xml ---
+          # AndroidManifest.xml
           cat <<'EOF' > app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
@@ -161,7 +162,7 @@ jobs:
           </manifest>
           EOF
 
-          # --- Layouts ---
+          # Layouts
           cat <<'EOF' > app/src/main/res/layout/activity_main.xml
           <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
@@ -201,7 +202,7 @@ jobs:
           </LinearLayout>
           EOF
 
-          # --- Values ---
+          # Values
           cat <<'EOF' > app/src/main/res/values/strings.xml
           <resources>
               <string name="app_name">MusicPlayer</string>
@@ -224,7 +225,7 @@ jobs:
           </resources>
           EOF
 
-          # --- Gradle files ---
+          # Gradle files
           cat <<'EOF' > settings.gradle
           rootProject.name = "MusicPlayer"
           include ':app'
@@ -239,7 +240,7 @@ jobs:
           buildscript {
               repositories { google(); mavenCentral() }
               dependencies {
-                  classpath "com.android.tools.build:gradle:8.5.0"
+                  classpath "com.android.tools.build:gradle:8.7.0"
                   classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:2.0.21"
               }
           }
@@ -262,6 +263,15 @@ jobs:
                   versionName "1.0"
               }
 
+              compileOptions {
+                  sourceCompatibility JavaVersion.VERSION_17
+                  targetCompatibility JavaVersion.VERSION_17
+              }
+
+              kotlinOptions {
+                  jvmTarget = "17"
+              }
+
               buildTypes {
                   release {
                       minifyEnabled false
@@ -282,7 +292,7 @@ jobs:
           }
           EOF
 
-      # 4️⃣ Set up Gradle wrapper with 8.7 (required)
+      # 4️⃣ Set up Gradle wrapper
       - name: Set up Gradle wrapper
         run: gradle wrapper --gradle-version 8.7
 
