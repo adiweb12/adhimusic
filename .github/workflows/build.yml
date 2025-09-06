@@ -128,6 +128,12 @@ jobs:
           include ':app'
           EOF
 
+          # gradle.properties for AndroidX
+          cat <<EOF > MyMusicPlayer/gradle.properties
+          android.useAndroidX=true
+          android.enableJetifier=true
+          EOF
+
           # Root build.gradle
           cat <<EOF > MyMusicPlayer/build.gradle
           buildscript {
