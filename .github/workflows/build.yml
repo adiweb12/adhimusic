@@ -292,9 +292,9 @@ jobs:
           }
           EOF
 
-      # 4️⃣ Set up Gradle wrapper
+      # 4️⃣ Set up Gradle wrapper (must be 8.9+)
       - name: Set up Gradle wrapper
-        run: gradle wrapper --gradle-version 8.7
+        run: gradle wrapper --gradle-version 8.10
 
       # 5️⃣ Build APK
       - name: Build APK
